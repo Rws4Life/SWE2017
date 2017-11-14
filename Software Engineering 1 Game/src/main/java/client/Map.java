@@ -27,6 +27,10 @@ public class Map {
 		return map[x][y];
 	}
 	
+	public String getMapTileCoordinates(int x, int y){
+		return map[x][y];
+	}
+	
 	public String arrayToString(String[][] mapToConvert){
 		String stringMap="";
 		for(int i = 0; i<mapToConvert.length; i++){
