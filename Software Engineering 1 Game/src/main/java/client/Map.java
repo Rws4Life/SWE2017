@@ -31,6 +31,14 @@ public class Map {
 		return map[x][y];
 	}
 	
+	
+	public void setPlayerPosition(int posX, int posY, int oldX, int oldY){
+		map[oldX][oldY] = "0" + map[oldX][oldY].substring(1);
+		map[posX][posY] = "P" + map[posX][posY].substring(1);
+	}
+	
+	
+	
 	public String arrayToString(String[][] mapToConvert){
 		String stringMap="";
 		for(int i = 0; i<mapToConvert.length; i++){

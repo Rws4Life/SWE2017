@@ -13,15 +13,30 @@ public class ArtificialIntelligence {
 		//parse through array
 		//assign a value
 		//if i is 0 or
-		String[][] mapHalf = new String[8][4];
-		for(int i = 0; i<mapHalf.length;i++){
-			for(int j = 0; j<mapHalf[0].length;j++){ //length/2
+		String[][] mapHalf = new String[4][8];
+		for(int i = 0; i<mapHalf[0].length;i++){ //This is 4 on the y axis
+			for(int j = 0; j<mapHalf.length;j++){ //This is 8 on the x axis
 				
 				
-				mapHalf[i][j]="0G";
+				mapHalf[j][i]="0G";
 		
 			}
 		}
+		
+		
+		
+		//Create Castle on row 4 at the first grass tile
+		for(boolean check = false; check != true;){
+			for(int y = 0; y<8;y++){
+				if(mapHalf[3][y].contentEquals("0G")){
+						mapHalf[3][y]="0C";
+						y=7;
+						check=true;
+				}
+			}
+		}
+			
+		
 		return mapHalf;
 		//map[0][0] = "0G";
 	}

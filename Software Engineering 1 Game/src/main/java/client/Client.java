@@ -18,7 +18,6 @@ public class Client {
 	private boolean loss;
 	
 	public Client(){
-		createAIInstance();
 	}
 	
 	public ArtificialIntelligence getAI(){
@@ -78,14 +77,19 @@ public class Client {
 	}
 	
 	public void createAIInstance(){
-		ArtificialIntelligence ai = new ArtificialIntelligence();
+		AI = new ArtificialIntelligence();
 		Map mapHalf = new Map();
-		mapHalf.setMap(ai.generateMapHalf());
-		sendHalfMapToServer(mapHalf.arrayToString(mapHalf.getMap()));
+		mapHalf.setMap(AI.generateMapHalf()); //If row 4 and grass, put castle there
+		mapHalf.printMap();
+		sendHalfMapToServer(mapHalf.arrayToString(mapHalf.getMap())); //Loop of requests until able to send
 	}
 	
 	public void sendHalfMapToServer(String MapHalf){
 		
+	}
+	
+	public void moveOfAI(){
+		//player.setWantedCoordinates(AI.moveToField(player.getPositionX(), player.getPositionY()));
 	}
 	
 	
@@ -98,10 +102,9 @@ public class Client {
 
 	public static void main(String[] args) {
 		Client c = new Client();
-		ArtificialIntelligence ai = new ArtificialIntelligence();
-		//TODO make sendMapHalf(ai.generateMapHalf()); directly
-		String[][] mapHalf = ai.generateMapHalf();
+		
 		c.createAIInstance();
+		
 		
 		
 		

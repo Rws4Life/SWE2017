@@ -18,6 +18,11 @@ public class Player {
 		return wantedY;
 	}
 	
+	public void setWantedCoordinates(int x, int y){
+		wantedX = x;
+		wantedY = y;
+	}
+	
 	public void setPositionX(int posX){
 		positionX = posX;
 	}
