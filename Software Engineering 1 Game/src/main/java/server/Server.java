@@ -11,17 +11,20 @@ public class Server {
 		//parse through array
 		//assign a value
 		//if i is 0 or
-		String[][] mapHalf = new String[4][8];
-		for(int i = 0; i<mapHalf[0].length;i++){ //This is 4 on the y axis
+		String[][] mapHalf = new String[][]{
+		  { "0G", "0G", "0W", "0W", "0G", "0G", "0M", "0M" },
+		  { "0G", "0G", "0G", "0W", "0W", "0G", "0M", "0W" },
+		  { "0G", "0G", "0G", "0M", "0W", "0G", "0M", "0G" },
+		  { "0G", "0G", "0G", "0M", "0W", "0W", "0M", "0G" },
+	};
+		/*for(int i = 0; i<mapHalf[0].length;i++){ //This is 4 on the y axis
 			for(int j = 0; j<mapHalf.length;j++){ //This is 8 on the x axis
 				
 				
 				mapHalf[j][i]="0G";
 		
 			}
-		}
-		
-		
+		}*/
 		
 		//Create Castle on row 4 at the first grass tile
 		for(boolean check = false; check != true;){
@@ -33,8 +36,6 @@ public class Server {
 				}
 			}
 		}
-			
-		
 		return mapHalf;
 		//map[0][0] = "0G";
 	}
@@ -52,6 +53,7 @@ public class Server {
 	public static void main(String[] args) {
 		
 		Server s = new Server();
+		BusinessRules bs = new BusinessRules(); //bs.checkMap(mapHalf);
 		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
 		
 		m.printMap();
