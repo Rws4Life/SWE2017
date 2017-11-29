@@ -48,7 +48,7 @@ public class Server {
 		//assign a value
 		//if i is 0 or
 		String[][] mapHalf = new String[][]{
-		  { "0G", "0G", "0W", "0W", "0G", "0G", "0M", "0M" },
+		  { "0W", "0G", "0W", "0W", "0G", "0G", "0M", "0M" },
 		  { "0G", "0G", "0G", "0W", "0W", "0G", "0M", "0W" },
 		  { "0G", "0G", "0G", "0M", "0W", "0G", "0M", "0G" },
 		  { "0G", "0G", "0G", "0M", "0W", "0W", "0M", "0G" },

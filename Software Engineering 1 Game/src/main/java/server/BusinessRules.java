@@ -2,6 +2,131 @@ package server;
 
 public class BusinessRules {
 	
+	public boolean checkForIslands(String[][] mapHalf) {
+		String[][] cloneHalf = mapHalf;
+		for(int twice=1;twice<=2;twice++) {
+			System.out.println(twice);
+			//Increment
+			for(int i=0; i<4; i++) {
+				for(int j=0; j<8; j++) {
+					/*if(cloneHalf[0][0].contentEquals("0G") || cloneHalf[0][0].contentEquals("0M")) {
+						cloneHalf[0][0] = "0C";
+					}*/
+					
+					if(i==0 && j == 0) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M"))) {
+							cloneHalf[i][j] = "0C";
+						}
+						//If [0][0] wasn't viable, go through map until viable one found
+						else {
+							int i2=0,j2=0;
+							for(boolean until0C = false; until0C==true;) {
+								if((cloneHalf[i2][j2].contentEquals("0G") || cloneHalf[i2][j2].contentEquals("0M"))) {
+									cloneHalf[i2][j2] = "0C";
+									until0C=true;
+								}
+								else {
+									i2++;
+								}
+								if(i2<3 && until0C==false) {
+									i2=0;j2++;
+								}
+							}
+						}
+					}
+					
+					
+					/*if(i==0 && j>0 && j<8) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}*/
+					
+					if(i==0 && j>0 && j<7) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					
+					if(j == 0&&i>0) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					
+					if(j>0&&i>0 && j<7 && i<3) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					if(j>0&&i>0 && j==7 && i<3) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					
+					if(j>0&&i>0 && j<7 && i==3) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i][j+1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					
+					if(j>0&&i>0 && j==7 && i==3) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}
+					/*if(j>0&&i>0 && j<7 && i<4) {
+						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
+								cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C"))) {
+							cloneHalf[i][j] = "0C";
+						}
+					}*/
+				}
+			}
+			
+			//Decrement
+			
+		}
+		
+		/*for(int i=3; i>=0; i--) {
+			for(int j=7; j>=0; j--) {
+				if(cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M") ||
+						cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
+						cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C")) {
+					cloneHalf[i][j] = "0C";
+				}
+			}
+		}*/
+		//Print Map
+		String mapToPrint = "";		
+		for(int i = 0; i < cloneHalf.length; i++){
+			for(int j = 0; j < cloneHalf[0].length; j++){
+				String b = cloneHalf[i][j];
+				mapToPrint = mapToPrint + " " + b;
+			}
+			mapToPrint = mapToPrint + System.lineSeparator();				
+		}
+		System.out.println(mapToPrint);
+		
+		return true;
+	}
+	
+	
 	//Set up 3 counters GCount, MCount and WCount - go through String[][] and if position is grass, then GCOunt++, and check that GCount>5
 	public boolean checkMapGeneration(String[][] mapHalf){
 		int GCount=0; int MCount=0; int WCount=0;

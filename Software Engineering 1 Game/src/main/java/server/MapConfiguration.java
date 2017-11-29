@@ -10,6 +10,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 	//Constructor
 	public MapConfiguration(String mapHalfOfPlayer1, String mapHalfOfPlayer2){
 		BusinessRules bs = new BusinessRules();
+		System.out.println("Islands? " + bs.checkForIslands(stringToArrayHalf(mapHalfOfPlayer1)));
 		System.out.println("Map genration Player1: " + bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer1)));
 		setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
 		printMap();
