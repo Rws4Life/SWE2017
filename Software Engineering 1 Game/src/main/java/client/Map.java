@@ -51,8 +51,8 @@ public class Map {
 	
 	public void printMap(){
 		String mapToPrint = "";		
-		for(int i = 0; i < map.length; i++){
-			for(int j = 0; j < map[0].length; j++){
+		for(int i = 0; i < map.length; i++){ //X
+			for(int j = 0; j < map[0].length; j++){ //Y
 				String b = map[i][j];
 				mapToPrint = mapToPrint + " " + b;
 			}

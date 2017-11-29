@@ -3,6 +3,42 @@ package server;
 import client.ArtificialIntelligence;
 
 public class Server {
+	private int roundCounter = 0;
+	private int positionXPlayer1;
+	private int positionYPlayer1;
+	private int positionXPlayer2;
+	private int positionYPlayer2;
+	
+	private int getRoundCounter() {
+		return roundCounter;
+	}
+	private void setRoundCounter(int roundNumber) {
+		roundCounter = roundNumber;
+	}
+	private void setRoundCounterPlusOne() {
+		roundCounter++;
+	}
+	public int getPositionXPlayer1(){
+		return positionXPlayer1;
+	}
+	public int getPositionYPlayer1(){
+		return positionYPlayer1;
+	}
+	private void setPositionPlayer1(int x, int y) {
+		positionXPlayer1 = x;
+		positionYPlayer1 = y;
+	}
+	public int getPositionXPlayer2(){
+		return positionXPlayer2;
+	}
+	public int getPositionYPlayer2(){
+		return positionYPlayer2;
+	}
+	private void setPositionPlayer2(int x, int y) {
+		positionXPlayer2 = x;
+		positionYPlayer2 = y;
+	}
+	
 	//Manages Business rules and network between clients
 	//Puts map halves together
 	//checkPosition();
@@ -50,7 +86,29 @@ public class Server {
 		return stringMap;
 	}
 	
+	//If player on mountain and treasure around it, then show treasure -> send back treasure position
+	public String onMountain() {
+		/*if(bs.checkIfOnMountain==true) {
+			return "Ok.";
+		}*/
+		return "Ok.";
+	}
 	
+	
+	
+public static void main(String[] args){
+		
+		Server s = new Server();
+		BusinessRules bs = new BusinessRules(); //bs.checkMap(mapHalf);
+		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
+		
+		m.printMap();
+		
+		System.out.println(bs.checkSpawnOfTreasureAndCastle(m.getMap()));
+
+		
+		//Make a method "verifyRules" that verifies rules after each move -> if(bs.roundCounter(rounds)==false){s.bothLose()}
+	}
 	
 	
 }
