@@ -216,6 +216,8 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		//
 		
 		
+		
+		
 		//if all tests passed, true is returned
 		return true;
 	}

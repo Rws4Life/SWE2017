@@ -44,21 +44,13 @@ public class Server {
 		String stringMap="";
 		for(int i = 0; i<mapToConvert.length; i++){
 			for(int j = 0; j<mapToConvert[0].length; j++){
-				stringMap = stringMap + mapToConvert[i][j];
+				stringMap += mapToConvert[i][j];
 			}
 		}
 		return stringMap;
 	}
 	
-	public static void main(String[] args) {
-		
-		Server s = new Server();
-		BusinessRules bs = new BusinessRules(); //bs.checkMap(mapHalf);
-		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
-		
-		m.printMap();
-
-	}
+	
 	
 	
 }
