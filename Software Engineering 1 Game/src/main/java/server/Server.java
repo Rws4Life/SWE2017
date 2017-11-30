@@ -8,6 +8,8 @@ public class Server {
 	private int positionYPlayer1;
 	private int positionXPlayer2;
 	private int positionYPlayer2;
+	//treasurepositionXPlayer1 and treasurepositionYPlayer1
+	//treasurepositionXPlayer2 and treasurepositionYPlayer2
 	
 	private int getRoundCounter() {
 		return roundCounter;
@@ -39,6 +41,11 @@ public class Server {
 		positionYPlayer2 = y;
 	}
 	
+	//Constructor
+	public Server(int RoundCounter) {
+		setRoundCounter(RoundCounter);
+	}
+	
 	//Manages Business rules and network between clients
 	//Puts map halves together
 	//checkPosition();
@@ -48,7 +55,7 @@ public class Server {
 		//assign a value
 		//if i is 0 or
 		String[][] mapHalf = new String[][]{
-		  { "0W", "0G", "0W", "0W", "0G", "0G", "0M", "0M" },
+		  { "0W", "0G", "0G", "0G", "0G", "0G", "0M", "0M" },
 		  { "0G", "0G", "0G", "0W", "0W", "0G", "0M", "0W" },
 		  { "0G", "0G", "0G", "0M", "0W", "0G", "0M", "0G" },
 		  { "0G", "0G", "0G", "0M", "0W", "0W", "0M", "0G" },
@@ -98,7 +105,7 @@ public class Server {
 	
 public static void main(String[] args){
 		
-		Server s = new Server();
+		Server s = new Server(0);
 		BusinessRules bs = new BusinessRules(); //bs.checkMap(mapHalf);
 		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
 		

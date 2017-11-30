@@ -10,12 +10,25 @@ public class MapConfiguration { //Create whole map //Random Treasure
 	//Constructor
 	public MapConfiguration(String mapHalfOfPlayer1, String mapHalfOfPlayer2){
 		BusinessRules bs = new BusinessRules();
-		System.out.println("Islands? " + bs.checkForIslands(stringToArrayHalf(mapHalfOfPlayer1)));
-		System.out.println("Map genration Player1: " + bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer1)));
-		setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
-		printMap();
-		randomTreasure(map);
-		System.out.println("Map config done.");
+		boolean player1Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer1));
+		boolean player2Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer2));
+		System.out.println("Map genration Player1: " + player1Check);
+		System.out.println("Map genration Player2: " + player2Check);
+		if(player1Check == true && player2Check == true) {
+			setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
+			printMap();
+			randomTreasure(map);
+			System.out.println("Map config done.");
+		}
+		else if(player1Check == false && player2Check == true) {
+			//Send loss to player 1
+		}
+		else if(player1Check == true && player2Check == false) {
+			//Send loss to player 2
+		}
+		else if(player1Check == false && player2Check == false) {
+			//Send loss to player 1 and 2
+		}
 	}
 	
 	//FINISHED Getter and Setter for Map
@@ -27,7 +40,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		return map;
 	}
 	
-	//FINISHED Generating Random Treasure for both players
+	//Generating Random Treasure for both players
 	public void randomTreasure(String[][] map){
 		System.out.println("Starting treasure spawn.");
 		for(boolean loop=false;loop!=true;){
@@ -47,7 +60,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 			int j = randomInt(0,7);
 			if(map[i][j].contentEquals("0G")){
 				map[i][j] = map[i][j].substring(0, 1);
-				map[i][j] = map[i][j] + "X";
+				map[i][j] = map[i][j] + "X"; //TODO Change it to T later when it's possible to differentiate between trasures
 				loop=true;
 			}
 		}
