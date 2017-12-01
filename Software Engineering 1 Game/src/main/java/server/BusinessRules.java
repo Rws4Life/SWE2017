@@ -2,6 +2,10 @@ package server;
 
 public class BusinessRules {
 	
+	public void ifStatementsForIslands() {
+		
+	}
+	
 	public boolean checkForIslands(String[][] mapHalf) {
 		String[][] cloneHalf = mapHalf;
 		for(int twice=1;twice<=2;twice++) {
@@ -283,6 +287,38 @@ public class BusinessRules {
 			}
 		}
 		if(CastleExists==false||TreasureExists==false) return false;
+		
+		return true;
+	}
+	
+	//check that he only goes 1 field
+	public boolean checkFieldMovement(int posX, int posY, int wantedX, int wantedY) {
+		if((posX-1==wantedX||posX+1==wantedX)&&(posY-1==wantedY||posY+1==wantedY)) return true;
+		return false;
+	}
+	//don't go too fast to next field
+	public boolean checkRoundsUntilMove(int posX, int posY, int wantedX, int wantedY, int turnsLeft, String[][] map) {
+		if(map[posX][posY].contentEquals("0G")) {
+			if(map[wantedX][wantedY].contentEquals("0G") || map[wantedX][wantedY].contentEquals("0W")) {
+				if(turnsLeft==2) return true;
+				else return false;
+			}
+			if(map[wantedX][wantedY].contentEquals("0M")) {
+				if(turnsLeft==3) return true;
+				else return false;
+			}
+		}
+		if(map[posX][posY].contentEquals("0M")) {
+			if(map[wantedX][wantedY].contentEquals("0G") || map[wantedX][wantedY].contentEquals("0W")) {
+				if(turnsLeft==3) return true;
+				else return false;
+			}
+			if(map[wantedX][wantedY].contentEquals("0M")) {
+				if(turnsLeft==4) return true;
+				else return false;
+			}
+		}
+		
 		
 		return true;
 	}

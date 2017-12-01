@@ -7,6 +7,10 @@ public class MapConfiguration { //Create whole map //Random Treasure
 	String[][] map = new String[8][8];
 	
 	
+	public MapConfiguration() {
+		
+	}
+	
 	//Constructor
 	public MapConfiguration(String mapHalfOfPlayer1, String mapHalfOfPlayer2){
 		BusinessRules bs = new BusinessRules();
