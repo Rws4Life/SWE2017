@@ -7,6 +7,7 @@ import client.ArtificialIntelligence;
 
 @SpringBootApplication
 public class Server {
+	private int highestID = 0;
 	private int roundCounter = 0;
 	private int idPlayer1;
 	private int positionXPlayer1;
@@ -16,6 +17,13 @@ public class Server {
 	private int positionYPlayer2;
 	//treasurepositionXPlayer1 and treasurepositionYPlayer1
 	//treasurepositionXPlayer2 and treasurepositionYPlayer2
+	
+	public int getHighestID() {
+		return highestID;
+	}
+	public void setHighestID(int highestID) {
+		this.highestID = highestID;
+	}
 	
 	public int getRoundCounter() {
 		return roundCounter;
@@ -143,8 +151,10 @@ public class Server {
 	
 public static void main(String[] args){
 		
-		Server s = new Server();
-		SpringApplication.run(s.getClass(), args);
+		//Server s = new Server();
+		SpringApplication.run(Server.class, args);
+		
+		
 		
 		/* //bs.checkMap(mapHalf);
 		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
