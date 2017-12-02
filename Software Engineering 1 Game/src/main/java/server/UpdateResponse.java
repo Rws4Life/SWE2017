@@ -6,6 +6,27 @@ import javax.xml.bind.annotation.*;
 public class UpdateResponse {
  int playerPositionX, playerPositionY, enemyPositionX, enemyPositionY;
  boolean treasure, loss, win;
+ int treasurePositionX, treasurePositionY;
+ 
+ public void setTreasurePosition(int posX, int posY) {
+	 treasurePositionX = posX;
+	 treasurePositionY = posY;
+ }
+ public int getTreasurePositionX() {
+	 return treasurePositionX;
+ }
+ public int getTreasurePositionY() {
+	 return treasurePositionY;
+ }
+ 
+ public void setPlayerPosition(int playerPositionX, int playerPositionY) {
+	 this.playerPositionX = playerPositionX;
+	 this.playerPositionY = playerPositionY;
+ }
+ public void setEnemyPosition(int enemyPositionX, int enemyPositionY) {
+	 this.enemyPositionX = enemyPositionX;
+	 this.enemyPositionY = enemyPositionY;
+ }
  
 public int getPlayerPositionX() {
 	return playerPositionX;

@@ -298,7 +298,7 @@ public class BusinessRules {
 	}
 	//don't go too fast to next field
 	public boolean checkRoundsUntilMove(int posX, int posY, int wantedX, int wantedY, int turnsLeft, String[][] map) {
-		if(map[posX][posY].contentEquals("0G")) {
+		if(map[posX][posY].contentEquals("PG")) {
 			if(map[wantedX][wantedY].contentEquals("0G") || map[wantedX][wantedY].contentEquals("0W")) {
 				if(turnsLeft==2) return true;
 				else return false;
@@ -308,7 +308,7 @@ public class BusinessRules {
 				else return false;
 			}
 		}
-		if(map[posX][posY].contentEquals("0M")) {
+		if(map[posX][posY].contentEquals("PM")) {
 			if(map[wantedX][wantedY].contentEquals("0G") || map[wantedX][wantedY].contentEquals("0W")) {
 				if(turnsLeft==3) return true;
 				else return false;
@@ -328,9 +328,17 @@ public class BusinessRules {
 		if(map[positionX][positionY].contentEquals("PW")) return false;
 		return true;
 	}
+	
+	public boolean checkIfTouchedTreasure(int posX, int posY, String[][] map) {
+		if(map[posX][posY].contentEquals("PT")) return true;
+		return false;
+	}
 
 	public boolean checkIfOnMountain(int positionX, int positionY, String[][] map) {
-		if(map[positionX][positionY].contentEquals("PM")) return true;	
+		//posx-1 and posY-1; posx-1 and posy; posx-1 and posy+1; posx and posy-1; posx and posy+1; posx+1 and posy-1; posx+1 and posy; posx+1 and posy+1;
+		if(map[positionX][positionY].contentEquals("PM") && (map[positionX-1][positionY-1].contentEquals("0T") || map[positionX-1][positionY].contentEquals("0T") ||
+			map[positionX-1][positionY+1].contentEquals("0T") || map[positionX][positionY-1].contentEquals("0T") || map[positionX][positionY+1].contentEquals("0T") ||
+			map[positionX+1][positionY-1].contentEquals("0T") || map[positionX+1][positionY].contentEquals("0T") || map[positionX+1][positionY+1].contentEquals("0T"))) return true;	
 		return false;
 	}
 }

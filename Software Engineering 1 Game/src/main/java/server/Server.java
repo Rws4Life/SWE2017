@@ -15,12 +15,19 @@ public class Server {
 	private int idPlayer2;
 	private int positionXPlayer2;
 	private int positionYPlayer2;
+	private int treasurePositionXPlayer1;
+	private int treasurePositionYPlayer1;
+	private int treasurePositionXPlayer2;
+	private int treasurePositionYPlayer2;
 	//treasurepositionXPlayer1 and treasurepositionYPlayer1
 	//treasurepositionXPlayer2 and treasurepositionYPlayer2
+	
+	
 	
 	public int getHighestID() {
 		return highestID;
 	}
+	
 	public void setHighestID(int highestID) {
 		this.highestID = highestID;
 	}
@@ -65,6 +72,40 @@ public class Server {
 	public void setPositionPlayer2(int x, int y) {
 		positionXPlayer2 = x;
 		positionYPlayer2 = y;
+	}
+	
+	public void setTreasurePositionPlayer1(int posX, int posY) {
+		this.treasurePositionXPlayer1 = posX;
+		this.treasurePositionYPlayer1 = posY;
+	}
+	public void setTreasurePositionPlayer2(int posX, int posY) {
+		this.treasurePositionXPlayer2 = posX;
+		this.treasurePositionYPlayer2 = posY;
+	}
+	
+	public int getTreasurePositionXPlayer1() {
+		return treasurePositionXPlayer1;
+	}
+	public void setTreasurePositionXPlayer1(int treasurePositionXPlayer1) {
+		this.treasurePositionXPlayer1 = treasurePositionXPlayer1;
+	}
+	public int getTreasurePositionYPlayer1() {
+		return treasurePositionYPlayer1;
+	}
+	public void setTreasurePositionYPlayer1(int treasurePositionYPlayer1) {
+		this.treasurePositionYPlayer1 = treasurePositionYPlayer1;
+	}
+	public int getTreasurePositionXPlayer2() {
+		return treasurePositionXPlayer2;
+	}
+	public void setTreasurePositionXPlayer2(int treasurePositionXPlayer2) {
+		this.treasurePositionXPlayer2 = treasurePositionXPlayer2;
+	}
+	public int getTreasurePositionYPlayer2() {
+		return treasurePositionYPlayer2;
+	}
+	public void setTreasurePositionYPlayer2(int treasurePositionYPlayer2) {
+		this.treasurePositionYPlayer2 = treasurePositionYPlayer2;
 	}
 	
 	//Constructor
@@ -145,6 +186,27 @@ public class Server {
 			return "Ok.";
 		}*/
 		return "Ok.";
+	}
+	public boolean checkRules(int id, BusinessRules bs, MapConfiguration m, int posX, int posY, int wantedX, int wantedY, int turnsLeft) {
+		if(bs.roundCount(getRoundCounter()) == false) return false;
+		if(bs.checkPlayerNotOnWaterOrOutsideMap(posX, posY, m.getMap()) == false) return false;
+		if(bs.checkFieldMovement(posX, posY, wantedX, wantedY) == false) return false;
+		
+		if(turnsLeft != 0) {
+			if(id==getIdPlayer1() && (posX != getPositionXPlayer1() || posY != getPositionYPlayer1() )) {
+				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, m.getMap()) == false) return false;
+			}
+			if(id==getIdPlayer2() && (posX != getPositionXPlayer2() || posY != getPositionYPlayer2())) {
+				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, m.getMap()) == false) return false;
+			}
+		}
+		if(turnsLeft == 0) {
+			if(id==getIdPlayer1()) setPositionPlayer1(posX, posY);
+			if(id==getIdPlayer2()) setPositionPlayer2(posX, posY);
+		}
+		
+		
+		return true;
 	}
 	
 	public String prepareMap(String mapHalfP1, String mapHalfP2) {
