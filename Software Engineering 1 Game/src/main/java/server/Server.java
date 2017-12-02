@@ -147,6 +147,10 @@ public class Server {
 		return "Ok.";
 	}
 	
+	public String prepareMap(String mapHalfP1, String mapHalfP2) {
+		MapConfiguration m = new MapConfiguration(mapHalfP1, mapHalfP2);
+		return m.arrayToString(m.getMap());
+	}
 	
 	
 public static void main(String[] args){
