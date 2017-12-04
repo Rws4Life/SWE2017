@@ -17,14 +17,14 @@ public class BusinessRules {
 					}*/
 					
 					if(i==0 && j == 0) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M"))) {
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M"))) {
 							cloneHalf[i][j] = "00";
 						}
 						//If [0][0] wasn't viable, go through map until viable one found
 						else {
 							int i2=0,j2=0;
 							for(boolean until00 = false; until00!=true;) {
-								if(cloneHalf[i2][j2].contentEquals("0G") || cloneHalf[i2][j2].contentEquals("0M")|| cloneHalf[i2][j2].contentEquals("00")) {
+								if(cloneHalf[i2][j2].contentEquals("0C") || cloneHalf[i2][j2].contentEquals("PC") || cloneHalf[i2][j2].contentEquals("0G") || cloneHalf[i2][j2].contentEquals("0M")|| cloneHalf[i2][j2].contentEquals("00")) {
 									cloneHalf[i2][j2] = "00";
 									until00=true;
 								}
@@ -48,7 +48,7 @@ public class BusinessRules {
 					}*/
 					
 					if(i==0 && j>0 && j<7) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -56,7 +56,7 @@ public class BusinessRules {
 					}
 					
 					if(j == 0&&i>0) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -64,7 +64,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j<7 && i<3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -72,7 +72,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j==7 && i<3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -80,7 +80,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j<7 && i==3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -88,14 +88,14 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j==7 && i==3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
 						}
 					}
 					
 					if(j==7 && i==0) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
 						}
@@ -115,7 +115,7 @@ public class BusinessRules {
 				for(int j=7; j>=0; j--) {
 					
 					if(i==0 && j>0 && j<7) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -123,7 +123,7 @@ public class BusinessRules {
 					}
 					
 					if(j == 0&&i>0) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -131,7 +131,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j<7 && i<3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -139,7 +139,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j==7 && i<3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i+1][j].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -147,7 +147,7 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j<7 && i==3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00")||
 								cloneHalf[i][j+1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
@@ -155,14 +155,14 @@ public class BusinessRules {
 					}
 					
 					if(j>0&&i>0 && j==7 && i==3) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i-1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
 						}
 					}
 					
 					if(j==7 && i==0) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
+						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
 								(cloneHalf[i+1][j].contentEquals("00")||cloneHalf[i][j-1].contentEquals("00"))) {
 							cloneHalf[i][j] = "00";
 						}
@@ -197,7 +197,7 @@ public class BusinessRules {
 		
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<8; j++) {
-				if(cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) return true;
+				if(cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) return true;
 			}
 		}
 		
@@ -283,7 +283,7 @@ public class BusinessRules {
 		for(int i = 4; i < 8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(map[i][j].contentEquals("0C")||map[i][j].contentEquals("PC")) CastleExists=true;
-				if(map[i][j].contentEquals("0X")) TreasureExists=true; //TODO, change to 0T after treasure implemented correctly
+				if(map[i][j].contentEquals("0T")) TreasureExists=true; //TODO, change to 0T after treasure implemented correctly
 			}
 		}
 		if(CastleExists==false||TreasureExists==false) return false;
@@ -324,8 +324,8 @@ public class BusinessRules {
 	}
 	
 	public boolean checkPlayerNotOnWaterOrOutsideMap(int positionX, int positionY, String[][] map) {
-		if(positionX < 0 || positionX > map[0].length || positionY < 0 || positionY > map.length) return false; //TODO: Check later if length values checked correctly
-		if(map[positionX][positionY].contentEquals("PW")) return false;
+		if(positionX < 0 || positionX > map.length || positionY < 0 || positionY > map[0].length) return false; //TODO: Check later if length values checked correctly
+		if(map[positionX][positionY].contentEquals("PW") || map[positionX][positionY].contentEquals("0W")) return false;
 		return true;
 	}
 	
@@ -345,7 +345,7 @@ public class BusinessRules {
 		return false;
 	}
 
-	public boolean checkIfOnMountain(int positionX, int positionY, String[][] map) {
+	public boolean checkIfOnMountain(int positionX, int positionY, String[][] map) { //TODO Fix if on edge of map, exception
 		//posx-1 and posY-1; posx-1 and posy; posx-1 and posy+1; posx and posy-1; posx and posy+1; posx+1 and posy-1; posx+1 and posy; posx+1 and posy+1;
 		if(map[positionX][positionY].contentEquals("PM") && (map[positionX-1][positionY-1].contentEquals("0T") || map[positionX-1][positionY].contentEquals("0T") ||
 			map[positionX-1][positionY+1].contentEquals("0T") || map[positionX][positionY-1].contentEquals("0T") || map[positionX][positionY+1].contentEquals("0T") ||

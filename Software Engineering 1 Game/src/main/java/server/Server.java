@@ -1,5 +1,7 @@
 package server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,48 +9,43 @@ import client.ArtificialIntelligence;
 
 @SpringBootApplication
 public class Server {
+	private String[][] map;
+	public void setMap(String[][] map) {
+		this.map = map;
+	}
+	public String[][] getMap(){
+		return map;
+	}
+	
 	private int highestID = 0;
 	private int roundCounter = 0;
+	
 	private int idPlayer1;
 	private int positionXPlayer1;
 	private int positionYPlayer1;
 	private boolean winPlayer1;
 	private boolean lossPlayer1;
+	
 	private int idPlayer2;
 	private int positionXPlayer2;
 	private int positionYPlayer2;
 	private boolean winPlayer2;
 	private boolean lossPlayer2;
+	
 	private int treasurePositionXPlayer1;
 	private int treasurePositionYPlayer1;
 	private int treasurePositionXPlayer2;
 	private int treasurePositionYPlayer2;
+	private boolean treasureP1;
+	private boolean treasureP2;
 	
 	private int castlePositionXPlayer1;
 	private int castlePositionYPlayer1;
 	private int castlePositionXPlayer2;
 	private int castlePositionYPlayer2;
-	
-	//treasurepositionXPlayer1 and treasurepositionYPlayer1
-	//treasurepositionXPlayer2 and treasurepositionYPlayer2
-	
-	
-	private boolean treasureP1;
-	private boolean treasureP2;
 	private boolean castleP1;
 	private boolean castleP2;
 	
-
-
-
-
-
-	
-
-	
-
-	
-
 	
 	
 	
@@ -284,24 +281,18 @@ public class Server {
 		
 		return arrayMap;
 	}
-	//If player on mountain and treasure around it, then show treasure -> send back treasure position
-	public String onMountain() {
-		/*if(bs.checkIfOnMountain==true) {
-			return "Ok.";
-		}*/
-		return "Ok.";
-	}
-	public boolean checkRules(int id, BusinessRules bs, MapConfiguration m, int posX, int posY, int wantedX, int wantedY, int turnsLeft) {
+	
+	public boolean checkRules(int id, BusinessRules bs, Server s, int posX, int posY, int wantedX, int wantedY, int turnsLeft) {
 		if(bs.roundCount(getRoundCounter()) == false) return false;
-		if(bs.checkPlayerNotOnWaterOrOutsideMap(posX, posY, m.getMap()) == false) return false;
+		if(bs.checkPlayerNotOnWaterOrOutsideMap(posX, posY, s.getMap()) == false) return false;
 		if(bs.checkFieldMovement(posX, posY, wantedX, wantedY) == false) return false;
 		
 		if(turnsLeft != 0) {
 			if(id==getIdPlayer1() && (posX != getPositionXPlayer1() || posY != getPositionYPlayer1() )) {
-				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, m.getMap()) == false) return false;
+				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, s.getMap()) == false) return false;
 			}
 			if(id==getIdPlayer2() && (posX != getPositionXPlayer2() || posY != getPositionYPlayer2())) {
-				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, m.getMap()) == false) return false;
+				if(bs.checkRoundsUntilMove(posX, posY, wantedX, wantedY, turnsLeft, s.getMap()) == false) return false;
 			}
 		}
 		if(turnsLeft == 0) {
@@ -313,6 +304,10 @@ public class Server {
 		return true;
 	}
 	
+	public void updatePlayerPosition(int posX, int posY, int oldX, int oldY, String[][] map){
+		map[oldX][oldY] = "0" + map[oldX][oldY].substring(1);
+		map[posX][posY] = "P" + map[posX][posY].substring(1);
+	}
 	
 	
 	public String prepareMap(String mapHalfP1, String mapHalfP2, Server s) {
@@ -320,10 +315,24 @@ public class Server {
 		return m.arrayToString(m.getMap());
 	}
 	
+	public void printMap(){
+		String mapToPrint = "";		
+		for(int i = 0; i < map.length; i++){
+			for(int j = 0; j < map[0].length; j++){
+				String b = map[i][j];
+				mapToPrint = mapToPrint + " " + b;
+			}
+			mapToPrint = mapToPrint + System.lineSeparator();
+						
+		}
+		System.out.println(mapToPrint);
+	}
 	
 public static void main(String[] args){
 		
 		//Server s = new Server();
+		Logger logger = LoggerFactory.getLogger(Server.class);
+		logger.info("Hello world."); //<immediateFlush>true</immediateFlush> couldn't be implemented
 		SpringApplication.run(Server.class, args);
 		
 		

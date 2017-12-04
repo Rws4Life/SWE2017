@@ -16,13 +16,15 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		BusinessRules bs = new BusinessRules();
 		boolean player1Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer1));
 		boolean player2Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer2));
+		
 		System.out.println("Map genration Player1: " + player1Check);
 		System.out.println("Map genration Player2: " + player2Check);
 		if(player1Check == true && player2Check == true) {
 			setCastlePositions(stringToArrayHalf(mapHalfOfPlayer1), stringToArrayHalf(mapHalfOfPlayer2), s);
-			setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
-			printMap();
-			randomTreasure(map, s);
+			s.setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
+			s.printMap();
+			randomTreasure(s.getMap(), s);
+			//mc.setMap(map);
 			System.out.println("Map config done.");
 		}
 		else if(player1Check == false && player2Check == true) {
@@ -67,6 +69,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 	//Generating Random Treasure for both players
 	public void randomTreasure(String[][] map, Server s){
 		System.out.println("Starting treasure spawn.");
+		//String[][] map2 = mc.getMap();
 		for(boolean loop=false;loop!=true;){
 			int i = randomInt(0,3);
 			int j = randomInt(0,7);	
