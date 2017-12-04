@@ -79,6 +79,8 @@ public class Controller{
 		
 		return banana;
 	}
+	
+	//TODO Getter and Setter
 	boolean waitingP1=true;
 	boolean sentMapP1=true;
 	@RequestMapping(value="/MapCreation", produces="application/xml", consumes="application/xml")
@@ -102,12 +104,12 @@ public class Controller{
 						e.printStackTrace();
 					}
 				}
-				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2));
+				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
 			}
 			if(newMapReq.getID()==idP2) {
 				setMapHalfP2(newMapReq.getMapHalf());
 				waitingP1=false;
-				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2));
+				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
 			}
 		}
 		if(sentMapP1==false) {
@@ -120,12 +122,12 @@ public class Controller{
 						e.printStackTrace();
 					}
 				}
-				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2));
+				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
 			}
 			if(newMapReq.getID()==idP1) {
 				setMapHalfP2(newMapReq.getMapHalf());
 				waitingP1=false;
-				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2));
+				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
 			}
 		}
 		
@@ -142,8 +144,17 @@ public class Controller{
 		UpdateResponse banana = new UpdateResponse();
 		s.setRoundCounterPlusOne();
 		
-		if(s.checkRules(updateReq.getID(), bs, mc, updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), updateReq.getWantedPositionX(), updateReq.getWantedPositionY(), updateReq.getTurnsLeft()) == false)
-			banana.setLoss(true); //if position is good, rounds until movement is good, not on water
+		if(s.checkRules(updateReq.getID(), bs, mc, updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), updateReq.getWantedPositionX(), updateReq.getWantedPositionY(), updateReq.getTurnsLeft()) == false) {
+			banana.setLoss(true);
+			if(updateReq.getID()==s.getIdPlayer1()) {
+				s.setLossPlayer1(true);
+			}
+			if(updateReq.getID()==s.getIdPlayer2()) {
+				s.setLossPlayer2(true);
+			}
+		}
+			 //if position is good, rounds until movement is good, not on water
+		
 		/* int playerPositionX, playerPositionY, enemyPositionX, enemyPositionY;
  boolean treasure, loss, win;*/
 		if(updateReq.getID()==s.getIdPlayer1()) {
@@ -154,10 +165,21 @@ public class Controller{
 				if(bs.checkIfOnMountain(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), mc.getMap()) == true) {
 					banana.setTreasurePosition(s.getTreasurePositionXPlayer1(), s.getTreasurePositionYPlayer1());
 				}
+				
+				if(bs.checkIfTouchedTreasure(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), mc.getMap(), s.getTreasurePositionXPlayer1(), s.getTreasurePositionYPlayer1()) == true) {
+					s.setTreasureP1(true);
+					banana.setTreasure(true);
+				}
+				
+				if(bs.checkWinningCondition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.isTreasureP1(), s.getCastlePositionXPlayer2(), s.getCastlePositionYPlayer2())) {
+					s.setWinPlayer1(true);
+					banana.setWin(true);
+				}
 			}
 		}
 		if(updateReq.getID()==s.getIdPlayer2()) {
 			if(banana.isLoss() != true) {
+				
 				banana.setPlayerPosition(s.getPositionXPlayer2(), s.getPositionYPlayer2());
 				banana.setEnemyPosition(s.getPositionXPlayer1(), s.getPositionYPlayer1());
 				
@@ -165,24 +187,34 @@ public class Controller{
 					banana.setTreasurePosition(s.getTreasurePositionXPlayer2(), s.getTreasurePositionYPlayer2());
 				}
 				
+				if(bs.checkIfTouchedTreasure(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), mc.getMap(), s.getTreasurePositionXPlayer2(), s.getTreasurePositionYPlayer2()) == true) {
+					s.setTreasureP2(true);
+					banana.setTreasure(true);
+				}
+				
+				if(bs.checkWinningCondition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.isTreasureP2(), s.getCastlePositionXPlayer1(), s.getCastlePositionYPlayer1())) {
+					s.setWinPlayer2(true);
+					banana.setWin(true);
+				}
+				
 			}
 		}
-
-		//Check if on treasure and set true
-		if(bs.checkIfTouchedTreasure(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), mc.getMap()) == true) banana.setTreasure(true);
-		
-		//check if winning condition met
 		
 		return banana;
 	}
+	
+	
 	
 	@RequestMapping(value="/Problem", produces="application/xml", consumes="application/xml") //TODO Create ConnectionProblemRequest in documentation
 	public ConnectionProblemResponse ConnectionProblem(@RequestBody ConnectionProblemRequest problemReq) {
 		
 		ConnectionProblemResponse banana = new ConnectionProblemResponse();
-		//System.out.println("Island: " + bs.checkForIslands(mc.stringToArray(newMapReq.getMapHalf())));
-		//(newMapReq.getMapHalf());
-		//banana.setFullMap(fullMap);
+		if((problemReq.getID()==s.getIdPlayer1() && s.isLossPlayer1()==true) || s.isWinPlayer2()) {
+			banana.setLoss(true);
+		}
+		if((problemReq.getID()==s.getIdPlayer2() && s.isLossPlayer2()==true) || s.isWinPlayer1()) {
+			banana.setLoss(true);
+		}
 		
 		return banana;
 	}

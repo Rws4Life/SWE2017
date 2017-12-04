@@ -329,8 +329,19 @@ public class BusinessRules {
 		return true;
 	}
 	
-	public boolean checkIfTouchedTreasure(int posX, int posY, String[][] map) {
-		if(map[posX][posY].contentEquals("PT")) return true;
+	public boolean checkIfTouchedTreasure(int posX, int posY, String[][] map, int treasureX, int treasureY) {
+		if(posX==treasureX && posY==treasureY) {
+			map[posX][posY].replace("T", "G");
+			return true;
+		}
+		return false;
+	}
+	public boolean checkWinningCondition(int posX, int posY, boolean treasureStatus, int enemyCX, int enemyCY) {
+		if(treasureStatus==true && posX==enemyCX && posY==enemyCY) {
+			
+			return true;
+		}
+		
 		return false;
 	}
 
