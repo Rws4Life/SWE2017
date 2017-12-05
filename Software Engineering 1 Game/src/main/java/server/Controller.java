@@ -157,7 +157,6 @@ public class Controller{
 
 	@RequestMapping(value="/Update", produces="application/xml", consumes="application/xml") //TODO Update Documentation on name change
 	public UpdateResponse NewUpdate(@RequestBody  UpdateRequest updateReq) {
-		
 		UpdateResponse banana = new UpdateResponse();
 		s.setRoundCounterPlusOne();
 		s.setPositionPlayer2(6, 6);

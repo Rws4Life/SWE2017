@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import client.ArtificialIntelligence;
-
 @SpringBootApplication
 public class Server {
 	private String[][] map;

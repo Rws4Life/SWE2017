@@ -42,7 +42,7 @@ public class ServerTest {
 		BusinessRules bs = new BusinessRules();
 		MapConfiguration m = new MapConfiguration();
 		m.setMap(m.stringToArray("0C0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M0C0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M"));
-		s.checkRules(1, bs, s, 1, 1, 1, 0, 2);
+		s.checkRules(2, bs, s, 4, 0, 4, 1, 1);
 	}
 
 	@Test
