@@ -6,8 +6,17 @@
 <encoder>
 <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
 </encoder>
+
 </appender>
-<root level="DEBUG">
+
+<logger name="org.hibernate">
+	<level value="warning"/>
+</logger>
+
+<root level="info">
+<appender-ref ref="STDOUT" />
 <appender-ref ref="FILE" />
 </root>
+
+
 </configuration>

@@ -19,7 +19,7 @@ public class ControllerTestResponses {
 		c = null;
 	}
 
-	@Test
+	//@Test
 	public void testNewPlayer() {
 		NewPlayerRequest newPlayerReq = new NewPlayerRequest();
 		newPlayerReq.setFirstName("Razvan");
