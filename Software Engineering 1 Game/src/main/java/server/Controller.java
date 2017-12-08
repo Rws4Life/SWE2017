@@ -6,12 +6,26 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import databank.HibernateMain;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class Controller{
+	@Autowired
+	private Server s;
 	
-	Server s = new Server();
+	
+	public void setServer(Server s) {
+		this.s=s;
+	}
+	public Server getServer() {
+		return s;
+	}
+	
+	HibernateMain h = new HibernateMain();
 	BusinessRules bs = new BusinessRules();
 	MapConfiguration mc = new MapConfiguration();
 	private int playerNumber = 1;
@@ -66,21 +80,23 @@ public class Controller{
 	public NewPlayerResponse NewPlayer(@RequestBody NewPlayerRequest newPlayerReq) {
 		
 		NewPlayerResponse banana = new NewPlayerResponse();
-		//newPlayerReq.getFirstName();
 		int playerID = s.getHighestID()+1;
 		s.setHighestID(playerID);
-		if(playerNumber == 1) {
+		if(playerNumber == 2) {
+			s.setIdPlayer2(playerID);
+			idP2=playerID;
+			playerNumber++;
+			//h.setNewGame(1);
+			//h.setPlay(1, s.getIdPlayer1(), s.getIdPlayer2());
+		} //AT END OF MATCH SET PLAYERNUM TO 0
+		else if(playerNumber == 1) {
 			s.setIdPlayer1(playerID);
 			idP1=playerID;
 			playerNumber++;
 		}
-		else if(playerNumber == 2) {
-			s.setIdPlayer2(playerID);
-			idP2=playerID;
-			playerNumber++;
-		}
-		
 		banana.setID(playerID);
+		
+		//h.setNewPlayer(newPlayerReq.getFirstName(), newPlayerReq.getSecondName(), Integer.toString(newPlayerReq.getMatrikelnummer()), playerID);
 		
 		return banana;
 	}
@@ -93,9 +109,6 @@ public class Controller{
 		if(newMapReq.getID()==idP1) {
 			sentMapP1=true;
 		}
-		/*else if(newMapReq.getID()==idP2) {
-			sentMapP1=false;
-		} //UNLESS IT HAS BEEN SENT TODO*/
 		
 		CreateNewMapResponse banana = new CreateNewMapResponse();
 		
@@ -109,13 +122,15 @@ public class Controller{
 						e.printStackTrace();
 					}
 				}
-				banana.setFullMap(mc.arrayToString(mc.getMap()));
+				banana.setFullMap(s.arrayToString(s.getMap()));
 				
 			}
 			if(newMapReq.getID()==idP2) {
 				setMapHalfP2(newMapReq.getMapHalf());
 				waitingP1=false;
-				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
+				s.prepareMap(mapHalfP1, mapHalfP2, s);
+				banana.setFullMap(s.arrayToString(s.getMap()));
+				
 				
 			}
 		}
@@ -129,24 +144,25 @@ public class Controller{
 						e.printStackTrace();
 					}
 				}
-				banana.setFullMap(mc.arrayToString(mc.getMap()));
+				banana.setFullMap(s.arrayToString(s.getMap()));
 				
 			}
 			if(newMapReq.getID()==idP1) {
 				setMapHalfP2(newMapReq.getMapHalf());
 				waitingP1=false;
 				banana.setFullMap(s.prepareMap(mapHalfP1, mapHalfP2, s));
+				
 			}
 		}
 		
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<8; j++) {
-				if(s.stringToArray(banana.getFullMap())[i][j].contentEquals("0C")) s.setPositionPlayer1(i, j);
+				if(s.getMap()[i][j].contentEquals("PC")) s.setPositionPlayer1(i, j);
 			}
 		}
 		for(int i=4; i<8; i++) {
 			for(int j=0; j<8; j++) {
-				if(s.stringToArray(banana.getFullMap())[i][j].contentEquals("0C")) s.setPositionPlayer2(i, j);
+				if(s.getMap()[i][j].contentEquals("PC")) s.setPositionPlayer2(i, j); //This one works
 			}
 		}
 		return banana;
@@ -159,15 +175,12 @@ public class Controller{
 	public UpdateResponse NewUpdate(@RequestBody  UpdateRequest updateReq) {
 		UpdateResponse banana = new UpdateResponse();
 		s.setRoundCounterPlusOne();
-		s.setPositionPlayer2(6, 6);
 		if(updateReq.getID()==s.getIdPlayer1()) {
 			s.printMap();
-			System.out.println(s.getMap().length);
-			
-			s.updatePlayerPosition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.getPositionXPlayer1(), s.getPositionYPlayer1(), s.getMap());
+			s.updatePlayerPosition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.getPositionXPlayer1(), s.getPositionYPlayer1());
 		}
 		if(updateReq.getID()==s.getIdPlayer2()) {
-			s.updatePlayerPosition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.getPositionXPlayer2(), s.getPositionYPlayer2(), s.getMap());
+			s.updatePlayerPosition(updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), s.getPositionXPlayer2(), s.getPositionYPlayer2());
 		}
 		
 		if(s.checkRules(updateReq.getID(), bs, s, updateReq.getPlayerPositionX(), updateReq.getPlayerPositionY(), updateReq.getWantedPositionX(), updateReq.getWantedPositionY(), updateReq.getTurnsLeft()) == false) {
@@ -179,10 +192,8 @@ public class Controller{
 				s.setLossPlayer2(true);
 			}
 		}
-			 //if position is good, rounds until movement is good, not on water
+		//if position is good, rounds until movement is good, not on water
 		
-		/* int playerPositionX, playerPositionY, enemyPositionX, enemyPositionY;
- boolean treasure, loss, win;*/
 		if(updateReq.getID()==s.getIdPlayer1()) {
 			if(banana.isLoss() != true) {
 				banana.setPlayerPosition(s.getPositionXPlayer1(), s.getPositionYPlayer1());
@@ -203,6 +214,7 @@ public class Controller{
 				}
 			}
 		}
+		
 		if(updateReq.getID()==s.getIdPlayer2()) {
 			if(banana.isLoss() != true) {
 				
@@ -226,8 +238,6 @@ public class Controller{
 			}
 		}
 		
-		
-		
 		return banana;
 	}
 	
@@ -246,4 +256,31 @@ public class Controller{
 		
 		return banana;
 	}
+	@RequestMapping(value="/MapCreation", produces="application/xml", consumes="application/xml")
+	public CreateNewMapResponse NewMapForTests(@RequestBody CreateNewMapRequest newMapReq) {
+		
+		CreateNewMapResponse banana = new CreateNewMapResponse();
+		
+		setMapHalfP1("0C0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M");
+		
+		setMapHalfP2(newMapReq.getMapHalf());
+		
+		s.prepareMap(mapHalfP1, mapHalfP2, s);
+		banana.setFullMap(s.arrayToString(s.getMap()));
+		
+		for(int i=0; i<4; i++) {
+			for(int j=0; j<8; j++) {
+				if(s.getMap()[i][j].contentEquals("PC")) s.setPositionPlayer1(i, j);
+			}
+		}
+		for(int i=4; i<8; i++) {
+			for(int j=0; j<8; j++) {
+				if(s.getMap()[i][j].contentEquals("PC")) s.setPositionPlayer2(i, j); //This one works
+			}
+		}
+		return banana;
+	}
+
+
+
 }

@@ -5,8 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+
 public class Server {
+	Logger loggerServer = LoggerFactory.getLogger(Server.class);
 	private String[][] map;
 	public void setMap(String[][] map) {
 		this.map = map;
@@ -209,52 +210,8 @@ public class Server {
 	
 	//Constructor
 	public Server() {
-		
-		
-		//setRoundCounter(RoundCounter);
-	}
-	
-	//Manages Business rules and network between clients
-	//Puts map halves together
-	//checkPosition();
-	
-	public String[][] generateMapHalf(){ //send to AI
-		//parse through array
-		//assign a value
-		//if i is 0 or
-		String[][] mapHalf = new String[][]{
-		  { "0G", "0G", "0G", "0G", "0G", "0G", "0G", "0M" },
-		  { "0G", "0G", "0W", "0G", "0G", "0G", "0G", "0M" },
-		  { "0G", "0W", "0G", "0G", "0W", "0G", "0G", "0M" },
-		  { "0G", "0W", "0G", "0W", "0G", "0G", "0M", "0M" },
-	};
-	/*<?xml version="1.0" encoding="UTF-8"?>
-<CreateNewMapRequest>
-<ID>1</ID>
- <mapHalf>0G0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M</mapHalf>
-</CreateNewMapRequest>*/
-		/*for(int i = 0; i<mapHalf[0].length;i++){ //This is 4 on the y axis
-			for(int j = 0; j<mapHalf.length;j++){ //This is 8 on the x axis
-				
-				
-				mapHalf[j][i]="0G";
-		
-			}
-		}*/
-		
-		//Create Castle on row 4 at the first grass tile
-		for(boolean check = false; check != true;){
-			for(int y = 0; y<8;y++){
-				if(mapHalf[3][y].contentEquals("0G")){
-						mapHalf[3][y]="0C";
-						y=7;
-						check=true;
-				}
-			}
-		}
-		return mapHalf;
-		//map[0][0] = "0G";
-	}
+
+	}	
 	
 	public String arrayToString(String[][] mapToConvert){
 		String stringMap="";
@@ -281,6 +238,7 @@ public class Server {
 	}
 	
 	public boolean checkRules(int id, BusinessRules bs, Server s, int posX, int posY, int wantedX, int wantedY, int turnsLeft) {
+		loggerServer.info("Starting to check rules!");
 		if(bs.roundCount(getRoundCounter()) == false) return false;
 		if(bs.checkPlayerNotOnWaterOrOutsideMap(posX, posY, s.getMap()) == false) return false;
 		if(bs.checkFieldMovement(posX, posY, wantedX, wantedY) == false) return false;
@@ -294,21 +252,24 @@ public class Server {
 			}
 		}
 		if(turnsLeft == 0) {
+			loggerServer.info("Setting up player position.");
 			if(id==getIdPlayer1()) setPositionPlayer1(posX, posY);
 			if(id==getIdPlayer2()) setPositionPlayer2(posX, posY);
 		}
-		
-		
+	
+		loggerServer.info("Rules checked successfully.");
 		return true;
 	}
 	
-	public void updatePlayerPosition(int posX, int posY, int oldX, int oldY, String[][] map){
+	public void updatePlayerPosition(int posX, int posY, int oldX, int oldY){
 		map[oldX][oldY] = "0" + map[oldX][oldY].substring(1);
 		map[posX][posY] = "P" + map[posX][posY].substring(1);
+		loggerServer.info("Updated Player position successfully.");
 	}
 	
 	
 	public String prepareMap(String mapHalfP1, String mapHalfP2, Server s) {
+		loggerServer.info("Starting to prepare map!");
 		MapConfiguration m = new MapConfiguration(mapHalfP1, mapHalfP2, s);
 		return m.arrayToString(m.getMap());
 	}
@@ -324,28 +285,6 @@ public class Server {
 						
 		}
 		System.out.println(mapToPrint);
-	}
-	
-public static void main(String[] args){
-		
-		//Server s = new Server();
-		Logger logger = LoggerFactory.getLogger(Server.class);
-		logger.info("Hello world."); //<immediateFlush>true</immediateFlush> couldn't be implemented
-		SpringApplication.run(Server.class, args);
-		
-		
-		
-		/* //bs.checkMap(mapHalf);
-		MapConfiguration m = new MapConfiguration(s.arrayToString(s.generateMapHalf()), s.arrayToString(s.generateMapHalf()));
-		
-		m.printMap();
-		
-		System.out.println(bs.checkSpawnOfTreasureAndCastle(m.getMap()));*/
-		
-		
-
-		
-		//Make a method "verifyRules" that verifies rules after each move -> if(bs.roundCounter(rounds)==false){s.bothLose()}
 	}
 	
 	

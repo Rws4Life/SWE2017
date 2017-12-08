@@ -28,4 +28,49 @@ StartingCoordinates char(3),*/
 	
 	@Column(name="StartingCoordinates")
 	String startingCoordinates;
+	
+	Player(){}
+
+	public int getPlayerID() {
+		return playerID;
+	}
+
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public String getMatriculationNumber() {
+		return matriculationNumber;
+	}
+
+	public void setMatriculationNumber(String matriculationNumber) {
+		this.matriculationNumber = matriculationNumber;
+	}
+
+	public String getStartingCoordinates() {
+		return startingCoordinates;
+	}
+
+	public void setStartingCoordinates(String startingCoordinates) {
+		this.startingCoordinates = startingCoordinates;
+	}
+	
+	
+	
 }

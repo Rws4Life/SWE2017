@@ -30,62 +30,42 @@ public class ControllerTest {
 
 	@Test
 	public void testGetMapHalfP1() {
-		fail("Not yet implemented");
+		assertNull(c.getMapHalfP1());
 	}
 
 	@Test
 	public void testSetMapHalfP1() {
-		fail("Not yet implemented");
+		c.setMapHalfP1("0C0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M");
 	}
 
 	@Test
 	public void testGetMapHalfP2() {
-		fail("Not yet implemented");
+		c.getMapHalfP2();
 	}
 
 	@Test
 	public void testSetMapHalfP2() {
-		fail("Not yet implemented");
+		c.setMapHalfP2("0C0G0G0G0G0G0G0M0G0G0W0G0G0G0G0M0G0W0G0G0W0G0G0M0G0W0G0W0G0G0M0M");
 	}
 
 	@Test
 	public void testGetIdP1() {
-		fail("Not yet implemented");
+		c.getIdP1();
 	}
 
 	@Test
 	public void testSetIdP1() {
-		fail("Not yet implemented");
+		c.setIdP1(1);
 	}
 
 	@Test
 	public void testGetIdP2() {
-		fail("Not yet implemented");
+		c.getIdP2();
 	}
 
 	@Test
 	public void testSetIdP2() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNewPlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNewMap() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNewUpdate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testConnectionProblem() {
-		fail("Not yet implemented");
+		c.setIdP2(2);
 	}
 
 }

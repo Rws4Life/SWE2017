@@ -7,11 +7,15 @@
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 		<property name="dialect">org.hibernate.dialect.SQLiteDialect</property>
+		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="connection.driver_class">org.sqlite.JDBC</property>
 		<property name="connection.url">jdbc:sqlite:SWE.db</property>
 		<property name="connection.username"></property>
 		<property name="connection.password"></property>
 		<!-- <property name ="hibernate.hbm2dll.auto">update</property> -->
 		<mapping class="databank.Game"/>
+		<mapping class="databank.Play"/>
+		<mapping class="databank.Player"/>
+		<mapping class="databank.ActionList"/>
 	</session-factory>
 </hibernate-configuration>

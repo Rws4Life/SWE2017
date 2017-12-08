@@ -2,9 +2,13 @@ package server;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MapConfiguration { //Create whole map //Random Treasure
 	
 	String[][] map = new String[8][8];
+	Logger logger = LoggerFactory.getLogger(MapConfiguration.class);
 	
 	
 	public MapConfiguration() {
@@ -17,15 +21,16 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		boolean player1Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer1));
 		boolean player2Check = bs.checkMapGeneration(stringToArrayHalf(mapHalfOfPlayer2));
 		
-		System.out.println("Map genration Player1: " + player1Check);
-		System.out.println("Map genration Player2: " + player2Check);
+		logger.info("Map genration Player1: " + player1Check);
+		logger.info("Map genration Player2: " + player2Check);
 		if(player1Check == true && player2Check == true) {
-			setCastlePositions(stringToArrayHalf(mapHalfOfPlayer1), stringToArrayHalf(mapHalfOfPlayer2), s);
+			
 			s.setMap(stringToArray(putMapHalvesTogether(mapHalfOfPlayer1, mapHalfOfPlayer2)));
+			setCastlePositions(s.getMap(), s);
 			s.printMap();
 			randomTreasure(s.getMap(), s);
 			//mc.setMap(map);
-			System.out.println("Map config done.");
+			logger.info("Map config done.");
 		}
 		else if(player1Check == false && player2Check == true) {
 			//Send loss to player 1
@@ -38,18 +43,18 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		}
 	}
 	
-	public void setCastlePositions(String[][] mapHalfOfPlayer1, String[][] mapHalfOfPlayer2, Server s) {
-		for(int i=0; i<mapHalfOfPlayer1.length;i++) {
-			for(int j=0; j<mapHalfOfPlayer1[0].length;j++) {
-				if(mapHalfOfPlayer1[i][j].contentEquals("0C")) {
+	public void setCastlePositions(String[][] map, Server s) {
+		for(int i=0; i<map.length;i++) {
+			for(int j=0; j<map[0].length;j++) {
+				if(map[i][j].contentEquals("PC")) {
 					s.setCastlePositionPlayer1(i, j);
 				}
 			}
 		}
 		
-		for(int i=0; i<mapHalfOfPlayer2.length;i++) {
-			for(int j=0; j<mapHalfOfPlayer2[0].length;j++) {
-				if(mapHalfOfPlayer2[i][j].contentEquals("0C")) {
+		for(int i=4; i<map.length;i++) {
+			for(int j=0; j<map[0].length;j++) {
+				if(map[i][j].contentEquals("PC")) {
 					s.setCastlePositionPlayer2(i, j);
 				}
 			}
@@ -68,7 +73,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 	
 	//Generating Random Treasure for both players
 	public void randomTreasure(String[][] map, Server s){
-		System.out.println("Starting treasure spawn.");
+		logger.info("Starting treasure spawn.");
 		//String[][] map2 = mc.getMap();
 		for(boolean loop=false;loop!=true;){
 			int i = randomInt(0,3);
@@ -77,7 +82,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 				map[i][j] = map[i][j].substring(0, 1);
 				map[i][j] = map[i][j] + "T";
 				s.setTreasurePositionPlayer1(i, j);
-				System.out.println("Treasure spawn done.");
+				logger.info("Treasure spawn done.");
 				loop=true;
 			}
 
@@ -90,6 +95,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 				map[i][j] = map[i][j].substring(0, 1);
 				map[i][j] = map[i][j] + "T";
 				s.setTreasurePositionPlayer2(i, j);
+				logger.info("Treasure spawn done.");
 				loop=true;
 			}
 		}
@@ -154,10 +160,10 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		}
 		
 		else{
-			System.out.println("Error! Could not set player spawn.");
+			logger.info("Error! Could not set player spawn.");
 		}
 		
-		System.out.println("Spawn done.");
+		logger.info("Spawn done.");
 		
 	}
 	

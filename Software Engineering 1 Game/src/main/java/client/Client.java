@@ -94,7 +94,30 @@ public class Client {
 	
 	
 	
-	
+	public String[][] generateMapHalf(){ //send to AI
+		//parse through array
+		//assign a value
+		//if i is 0 or
+		String[][] mapHalf = new String[][]{
+		  { "0G", "0G", "0G", "0G", "0G", "0G", "0G", "0M" },
+		  { "0G", "0G", "0W", "0G", "0G", "0G", "0G", "0M" },
+		  { "0G", "0W", "0G", "0G", "0W", "0G", "0G", "0M" },
+		  { "0G", "0W", "0G", "0W", "0G", "0G", "0M", "0M" },
+	};
+		
+		//Create Castle on row 4 at the first grass tile
+		for(boolean check = false; check != true;){
+			for(int y = 0; y<8;y++){
+				if(mapHalf[3][y].contentEquals("0G")){
+						mapHalf[3][y]="0C";
+						y=7;
+						check=true;
+				}
+			}
+		}
+		return mapHalf;
+		//map[0][0] = "0G";
+	}
 	
 	
 	

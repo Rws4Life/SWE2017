@@ -1,31 +1,33 @@
 package server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BusinessRules {
-	
+	Logger logger = LoggerFactory.getLogger(ControllerTestResponses.class);
 	public void ifStatementsForIslands() {
 		
 	}
 	
 	public boolean checkForIslands(String[][] mapHalf) {
+		logger.info("Checking for islands:");
 		String[][] cloneHalf = mapHalf;
 		for(int twice=1;twice<=2;twice++) {
 			//Increment
 			for(int i=0; i<4; i++) {
 				for(int j=0; j<8; j++) {
-					/*if(cloneHalf[0][0].contentEquals("0G") || cloneHalf[0][0].contentEquals("0M")) {
-						cloneHalf[0][0] = "0C";
-					}*/
-					
 					if(i==0 && j == 0) {
 						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M"))) {
 							cloneHalf[i][j] = "00";
 						}
 						//If [0][0] wasn't viable, go through map until viable one found
 						else {
+							logger.info("First tile was not converted to 00");
 							int i2=0,j2=0;
 							for(boolean until00 = false; until00!=true;) {
 								if(cloneHalf[i2][j2].contentEquals("0C") || cloneHalf[i2][j2].contentEquals("PC") || cloneHalf[i2][j2].contentEquals("0G") || cloneHalf[i2][j2].contentEquals("0M")|| cloneHalf[i2][j2].contentEquals("00")) {
 									cloneHalf[i2][j2] = "00";
+									logger.info("Position " + i2 + "/" + j2 + " has been converted to 00 successfully.");
 									until00=true;
 								}
 								else {
@@ -37,15 +39,6 @@ public class BusinessRules {
 							}
 						}
 					}
-					
-					
-					/*if(i==0 && j>0 && j<8) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
-								(cloneHalf[i][j-1].contentEquals("0C")||
-								cloneHalf[i+1][j].contentEquals("0C"))) {
-							cloneHalf[i][j] = "0C";
-						}
-					}*/
 					
 					if(i==0 && j>0 && j<7) {
 						if((cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
@@ -100,13 +93,6 @@ public class BusinessRules {
 							cloneHalf[i][j] = "00";
 						}
 					}
-					/*if(j>0&&i>0 && j<7 && i<4) {
-						if((cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) &&
-								(cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
-								cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C"))) {
-							cloneHalf[i][j] = "0C";
-						}
-					}*/
 				}
 			}
 			
@@ -174,17 +160,7 @@ public class BusinessRules {
 				}
 			}
 		}
-		
-		/*for(int i=3; i>=0; i--) {
-			for(int j=7; j>=0; j--) {
-				if(cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M") ||
-						cloneHalf[i-1][j].contentEquals("0C")||cloneHalf[i][j-1].contentEquals("0C")||
-						cloneHalf[i+1][j].contentEquals("0C")||cloneHalf[i][j+1].contentEquals("0C")) {
-					cloneHalf[i][j] = "0C";
-				}
-			}
-		}*/
-		//Print Map
+		//Print Map into log file
 		String mapToPrint = "";		
 		for(int i = 0; i < cloneHalf.length; i++){
 			for(int j = 0; j < cloneHalf[0].length; j++){
@@ -193,14 +169,15 @@ public class BusinessRules {
 			}
 			mapToPrint = mapToPrint + System.lineSeparator();				
 		}
-		System.out.println(mapToPrint);
+		logger.info(mapToPrint);
+		//System.out.println(mapToPrint);
 		
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<8; j++) {
 				if(cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) return true;
 			}
 		}
-		
+		logger.info("Island check done.");
 		return false;
 	}
 	
@@ -210,7 +187,7 @@ public class BusinessRules {
 		int GCount=0; int MCount=0; int WCount=0;
 		//Check if map half has correct size
 		if(mapHalf.length != 4 || mapHalf[0].length != 8) return false;
-		System.out.println("Length was correct!");
+		logger.info("Length was correct!");
 		
 		//Count all Grass, Mountain and Water Fields
 		for(int i = 0; i<4; i++) {
@@ -220,7 +197,7 @@ public class BusinessRules {
 				else if(mapHalf[i][j].contentEquals("0W")) { WCount++;}
 			}
 		}
-		System.out.println("Grass Fields: " + GCount + " Mountain Fields: " + MCount + " Water Fields: " + WCount);
+		logger.info("Grass Fields: " + GCount + " Mountain Fields: " + MCount + " Water Fields: " + WCount);
 		//Check if there are enough of each type of Field
 		if(GCount<=5) return false;
 		if(MCount<=3) return false;
@@ -232,30 +209,29 @@ public class BusinessRules {
 		for(int i = 0; i<8; i++) {
 			if(mapHalf[0][i].contentEquals("0W")) WCountSide++;
 			if(WCountSide>3) return false;
-			
 		}
-		System.out.println(" Water Fields Upper: " + WCountSide);
+		logger.info(" Water Fields Upper: " + WCountSide);
 		WCountSide=0;
 		//Lowest Row 8
 		for(int i = 0; i<8; i++) {
 			if(mapHalf[3][i].contentEquals("0W")) WCountSide++;
 			if(WCountSide>3) return false; 
 		}
-		System.out.println(" Water Fields Down: " + WCountSide);
+		logger.info(" Water Fields Down: " + WCountSide);
 		WCountSide=0;
 		//Left Row 4
 		for(int i = 0; i<4; i++) {
 			if(mapHalf[i][0].contentEquals("0W")) WCountSide++;
 			if(WCountSide>1) return false;
 		}
-		System.out.println(" Water Fields Left: " + WCountSide);
+		logger.info(" Water Fields Left: " + WCountSide);
 		WCountSide=0;
 		//Right Row 4
 		for(int i = 0; i<4; i++) {
 			if(mapHalf[i][7].contentEquals("0W")) WCountSide++;
 			if(WCountSide>3) return false;
 		}
-		System.out.println(" Water Fields Right: " + WCountSide);
+		logger.info(" Water Fields Right: " + WCountSide);
 		WCountSide=0;
 		
 		//Check if Islands were generated
@@ -267,6 +243,7 @@ public class BusinessRules {
 
 	public boolean roundCount(int rounds) {
 		if(rounds>=200) return false;
+		logger.info("Currently at round number " + rounds + ". The limit was not reached yet.");
 		return true;
 	}
 	
@@ -283,17 +260,17 @@ public class BusinessRules {
 		for(int i = 4; i < 8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(map[i][j].contentEquals("0C")||map[i][j].contentEquals("PC")) CastleExists=true;
-				if(map[i][j].contentEquals("0T")) TreasureExists=true; //TODO, change to 0T after treasure implemented correctly
+				if(map[i][j].contentEquals("0T")) TreasureExists=true;
 			}
 		}
 		if(CastleExists==false||TreasureExists==false) return false;
-		
+		logger.info("Treasure and Castle spawned correctly.");
 		return true;
 	}
 	
 	//check that he only goes 1 field
 	public boolean checkFieldMovement(int posX, int posY, int wantedX, int wantedY) {
-		if((posX-1==wantedX||posX+1==wantedX)&&(posY-1==wantedY||posY+1==wantedY)) return true;
+		if((posX-1==wantedX||posX+1==wantedX||posX==wantedX)&&(posY-1==wantedY||posY+1==wantedY||posY==wantedY)) return true;
 		return false;
 	}
 	//don't go too fast to next field
@@ -324,10 +301,10 @@ public class BusinessRules {
 	}
 	
 	public boolean checkPlayerNotOnWaterOrOutsideMap(int positionX, int positionY, String[][] map) {
-		if(positionX < 0 || positionX > map.length || positionY < 0 || positionY > map[0].length) return false; //TODO: Check later if length values checked correctly
+		if(positionX < 0 || positionX > map.length || positionY < 0 || positionY > map[0].length) return false;
 		if(map[positionX][positionY].contentEquals("PW") || map[positionX][positionY].contentEquals("0W")) return false;
 		return true;
-	}
+	}//
 	
 	public boolean checkIfTouchedTreasure(int posX, int posY, String[][] map, int treasureX, int treasureY) {
 		if(posX==treasureX && posY==treasureY) {
@@ -336,9 +313,9 @@ public class BusinessRules {
 		}
 		return false;
 	}
+	
 	public boolean checkWinningCondition(int posX, int posY, boolean treasureStatus, int enemyCX, int enemyCY) {
 		if(treasureStatus==true && posX==enemyCX && posY==enemyCY) {
-			
 			return true;
 		}
 		
