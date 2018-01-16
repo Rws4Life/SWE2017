@@ -160,7 +160,7 @@ public class MapConfiguration { //Create whole map //Random Treasure
 		}
 		
 		else{
-			logger.info("Error! Could not set player spawn.");
+			logger.error("Error! Could not set player spawn.");
 		}
 		
 		logger.info("Spawn done.");

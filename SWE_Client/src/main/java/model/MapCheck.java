@@ -11,14 +11,44 @@ public class MapCheck {
 	
 	int posXOfIsland;
 	int posYOfIsland;
+	String[][] cloneHalf;
 	
-	
+	public boolean checkWaterOnSides(String[][] mapHalf) {
+		int WCountSide=0;
+		for(int i = 0; i<8; i++) {
+			if(mapHalf[0][i].contentEquals("0W")) WCountSide++;
+			if(WCountSide>3) return false;
+		}
+		logger.info(" Water Fields Upper: " + WCountSide);
+		WCountSide=0;
+		//Lowest Row 8
+		for(int i = 0; i<8; i++) {
+			if(mapHalf[3][i].contentEquals("0W")) WCountSide++;
+			if(WCountSide>3) return false; 
+		}
+		logger.info(" Water Fields Down: " + WCountSide);
+		WCountSide=0;
+		//Left Row 4
+		for(int i = 0; i<4; i++) {
+			if(mapHalf[i][0].contentEquals("0W")) WCountSide++;
+			if(WCountSide>1) return false;
+		}
+		logger.info(" Water Fields Left: " + WCountSide);
+		WCountSide=0;
+		//Right Row 4
+		for(int i = 0; i<4; i++) {
+			if(mapHalf[i][7].contentEquals("0W")) WCountSide++;
+			if(WCountSide>3) return false;
+		}
+		logger.info(" Water Fields Right: " + WCountSide);
+		WCountSide=0;
+		return true;
+	}
 	
 	
 	public int[] getIsland(String[][] map) {
 		int[] position = new int[2];
-		boolean islandfound = false;
-		while(!islandfound) {
+		
 			
 			if(checkForIslands(map)) { //if true
 				for(int i=0; i<3;i++) {
@@ -31,23 +61,16 @@ public class MapCheck {
 					}
 				}
 			}
-			else islandfound=true;
-		}
-		
+
 		
 		position[0] = 1337;
 		
 		return position;
 	}
-	
-	
-	public void checkIf() {
 		
-	}
-	String[][] cloneHalf;
 	
 	public boolean checkForIslands(String[][] mapHalf) {
-		logger.info("Checking for islands:");
+		logger.info("Checking for islands");
 		cloneHalf = mapHalf;
 		for(int twice=1;twice<=2;twice++) {
 			//Increment
@@ -59,12 +82,12 @@ public class MapCheck {
 						}
 						//If [0][0] wasn't viable, go through map until viable one found
 						else {
-							logger.info("First tile was not converted to 00");
+							//logger.info("First tile was not converted to 00");
 							int i2=i,j2=j;
 							for(boolean until00 = false; until00!=true;) {
 								if(!cloneHalf[i][j].contentEquals("0W")) {
 									cloneHalf[i2][j2] = "00";
-									logger.info("Position " + i2 + "/" + j2 + " has been converted to 00 successfully.");
+									//logger.info("Position " + i2 + "/" + j2 + " has been converted to 00 successfully.");
 									until00=true;
 								}
 								else {
@@ -205,7 +228,7 @@ public class MapCheck {
 			}
 			mapToPrint = mapToPrint + System.lineSeparator();				
 		}
-		logger.info(mapToPrint);
+		//logger.info(mapToPrint);
 		//System.out.println(mapToPrint);
 		
 		for(int i=0; i<4; i++) {
@@ -217,10 +240,16 @@ public class MapCheck {
 				}
 			}
 		}
-		logger.info("No island found.");
+		//logger.info("No island found.");
 		return false;
 	}
 	
+	public void setPosIsland(int i, int j) {
+		if(cloneHalf[i][j].contentEquals("0C") || cloneHalf[i][j].contentEquals("PC") || cloneHalf[i][j].contentEquals("0G") || cloneHalf[i][j].contentEquals("0M")) {
+			posXOfIsland = i;
+			posYOfIsland = j;
+		}
+	}
 	
 	public void checksAfter(String[][] mapHalf, int water, int mountain, int grass) {
 		logger.info("Checking Water.");

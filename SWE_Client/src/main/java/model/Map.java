@@ -7,13 +7,7 @@ public class Map {
 	static String[][] map;
 		
 	public Map(){
-		map = new String[8][8];/*{
-			  { "0G", "0G", "0W", "0W", "0G", "0G", "0M", "0M" },
-			  { "0G", "0G", "0G", "0W", "0W", "0G", "0M", "0W" },
-			  { "0G", "0G", "0G", "0M", "0W", "0G", "0M", "0G" },
-			  { "0G", "0G", "0G", "0M", "0W", "0W", "0M", "0G" },
-			  { "0G", "0M", "0M", "0M", "0C", "0M", "0M", "0G" },
-		};*/
+		map = new String[8][8];
 	}
 	
 	public String[][] getMap(){
